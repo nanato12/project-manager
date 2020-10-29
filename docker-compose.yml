@@ -1,0 +1,40 @@
+version: '3'
+services:
+  vue:
+    hostname: node15
+    build:
+      context: ./docker/client
+    container_name: client-vue
+    ports:
+      - 8080:8080
+    volumes:
+      - ./app/client:/app
+    working_dir: /app
+    tty: true
+    command: sh -c "cd assets && yarn install && yarn serve"
+
+  go:
+    hostname: golang1.15
+    build:
+      context: ./docker/server
+    container_name: server-go
+    ports:
+      - 8081:8081
+    volumes:
+      - ./app/server:/go/src/app
+    working_dir: /go/src/app
+    tty: true
+    command: fresh
+
+  nginx:
+    hostname: nginx
+    image: nginx
+    depends_on:
+      - go
+    container_name: nginx
+    ports:
+      - 80:80
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
