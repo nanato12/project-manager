@@ -8,10 +8,10 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./app/client:/app
-    working_dir: /app
+      - ./app/client:/client
+    working_dir: /client
     tty: true
-    command: sh -c "cd assets && yarn install && yarn serve"
+    command: sh -c "yarn install && yarn serve"
 
   go:
     hostname: golang1.15
@@ -21,8 +21,8 @@ services:
     ports:
       - 8081:8081
     volumes:
-      - ./app/server:/go/src/app
-    working_dir: /go/src/app
+      - ./app/server:/go/src/server
+    working_dir: /go/src/server
     tty: true
     command: fresh
 
@@ -56,6 +56,20 @@ services:
       - ./docker/mysql/data:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/mysql/sql:/docker-entrypoint-initdb.d
+
+  mysql-testing:
+    hostname: mysql-testing
+    image: mysql:8.0
+    container_name: db-mysql-testing
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: project-manager-test
+      TZ: Asia/Tokyo
+    ports:
+      - 3307:3306
 
   phpmyadmin:
     hostname: phpmyadmin
