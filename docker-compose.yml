@@ -35,6 +35,40 @@ services:
     ports:
       - 80:80
     environment:
-      - TZ=Asia/Tokyo
+      TZ: Asia/Tokyo
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+
+  mysql:
+    hostname: mysql
+    image: mysql:8.0
+    container_name: db-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: project-manager
+      TZ: Asia/Tokyo
+    ports:
+      - 3306:3306
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/mysql/sql:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    hostname: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    container_name: db-phpmyadmin
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOSTS: mysql
+      PMA_USER: user
+      PMA_PASSWORD: password
+    links:
+      - mysql
+    ports:
+      - 8082:80
+    volumes:
+      - ./docker/phpmyadmin/sessions:/sessions
