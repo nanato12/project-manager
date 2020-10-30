@@ -5,7 +5,23 @@
   </div>
   <router-view/>
 </template>
+<script>
+import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios'
 
+export default {
+  name: 'app',
+  components: {
+    HelloWorld
+  },
+  created () {
+    axios.get('api/')
+      .then(response => {
+        console.log(response)
+      })
+  }
+}
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
