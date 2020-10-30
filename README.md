@@ -1,6 +1,11 @@
 # project-manager
 backend: GO, frontend: Vue
 
+## Pages
+- Main: http://localhost
+- API: http://localhost/api/
+- phpMyAdmin: http://localhost:8082/
+
 ## Environment
 | Frontend |  |
 | :--- | :--- |
