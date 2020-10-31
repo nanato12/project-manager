@@ -13,3 +13,6 @@ trim_trailing_whitespace = false
 
 [*.{yml,conf}]
 indent_size = 2
+
+[*.sql]
+indent_style = tab
