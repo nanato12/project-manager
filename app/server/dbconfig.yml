@@ -1,0 +1,5 @@
+development:
+  dialect: mysql
+  datasource: user:password@tcp(mysql:3306)/project-manager?parseTime=true
+  dir: database/migrations
+  table: migrations
