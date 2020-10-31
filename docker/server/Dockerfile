@@ -1,7 +1,9 @@
 FROM golang:1.15-alpine
 
-ENV GO111MODULE=on
-
 RUN apk update && \
-    apk add emacs curl git && \
-    go get github.com/pilu/fresh
+    apk add curl git
+
+RUN go get -u github.com/oxequa/realize && \
+    go get -u github.com/rubenv/sql-migrate
+
+ENV GO111MODULE=on

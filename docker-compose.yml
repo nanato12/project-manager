@@ -24,7 +24,7 @@ services:
       - ./app/server:/go/src/server
     working_dir: /go/src/server
     tty: true
-    command: fresh
+    command: realize start --run
 
   nginx:
     hostname: nginx
